@@ -24,9 +24,14 @@
     // print_r($results);
 
 $longParis = $results[0]['longitude'];
-echo 'longitude : ' . $longParis;
+
 $latParis = $results[0]['latitude'];
-echo 'latitude : ' . $latParis;
+
+foreach ($results as $result) {
+    echo $result['longitude'];
+    echo $result['latitude'];
+    
+}
 
     ?>
 
@@ -39,6 +44,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
+
 var longParis = '<?php echo $longParis ; ?>';
 var latParis =  '<?php echo $latParis ; ?>' ;
 console.log(longParis);
