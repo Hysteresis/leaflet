@@ -18,20 +18,23 @@
     <h1>leaflet</h1>
     <div id="map"></div>
     <?php include 'script.php';
-    $stmt=$pdo->prepare("SELECT  ville, longitude, latitude FROM map");
+    $stmt=$pdo->prepare("SELECT  * FROM map");
     $stmt->execute();
     $results = $stmt->fetchAll();
-    // print_r($results);
+    // var_dump lisible
+    echo "<pre>";
+    print_r($results);
+    echo "</pre>";
 
-$longParis = $results[0]['longitude'];
+// $longParis = $results[0]['longitude'];
+// $longParis = $results[0];
+// $latParis = $results[3]['latitude'];
 
-$latParis = $results[0]['latitude'];
-
-foreach ($results as $result) {
-    echo $result['longitude'];
-    echo $result['latitude'];
+// foreach ($results as $result) {
+//     echo $result['longitude'];
+//     echo $result['latitude'];
     
-}
+// }
 
     ?>
 
@@ -39,16 +42,21 @@ foreach ($results as $result) {
     <script src="app.js"></script>
 
     <script>
-       
+
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
-var longParis = '<?php echo $longParis ; ?>';
-var latParis =  '<?php echo $latParis ; ?>' ;
-console.log(longParis);
-var marker = L.marker([latParis, longParis ]).addTo(map);
+// transformer en foreach
+<?php
+foreach ($results as $result) {
+echo "var marker = L.marker([" . $result['latitude'] . "," . $result['longitude'] . "]).addTo(map);";
+echo "marker.bindPopup (\" " . $result['ville'] . ", " . $result['description'] ." \").openPopup();";
+}
+?>
+// 
+
 // var marker = L.marker([45.777222, 3.087025]).addTo(map);
     </script>
 </body>
